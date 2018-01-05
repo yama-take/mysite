@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Poll Web App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/polls.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h2 class="orange-left">{{ question.question_text }}</h2>
+            </div>
+        </div>
+        <div class="container">
+            {% if error_message %}
+                <p class="text-danger"><strong>{{ error_message }}</strong></p>
+            {% endif %}
+            <div class="responsive">
+            <form action="{% url 'polls:vote' question.id %}" method="post">
+                <table class="table">
+                {% csrf_token %}
+                {% for choice in question.choice_set.all %}
+                    <tr><td>
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
+                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                    </td></tr>
+                {% endfor %}
+                </table>
+                <input type="submit" class="btn btn-primary" value="Vote" />
+            </form>
+            </div>
+        </div>
+    </body>
+</html>

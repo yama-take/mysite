@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Poll Web App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/polls.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h2 class="orange-left">{{ question.question_text }}</h2>
+            </div>
+        <div class="responsive">
+                <table class="table">
+    {% for choice in question.choice_set.all %}
+        <tr class="text-info"><td>{{ choice.choice_text }}</td><td>{{ choice.votes }} vote{{ choice.votes|pluralize }}</td></tr>
+    {% endfor %}
+                </table>
+                </div>
+
+<a class="btn btn-primary" role="button" href="{% url 'polls:detail' question.id %}">Vote again?</a>
+        </div>
+</body>
+</html>

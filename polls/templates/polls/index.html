@@ -1,0 +1,29 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Poll Web App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/polls.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1 class="title">Poll Web App</h1>
+        </div>
+        <div class="container">
+            {% if latest_question_list %}
+                <table class="table">
+                <ul>
+                {% for question in latest_question_list %}
+                    <tr><td><li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li></td></tr>
+                {% endfor %}
+                </ul>
+                </table>
+            {% else %}
+                <p class="text-success">No polls are available.</p>
+            {% endif %}
+        </div>
+    </body>
+</html>
